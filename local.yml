@@ -1,0 +1,53 @@
+version: "3.9"
+
+volumes:
+  local_postgres_data: {}
+
+services:
+
+  postgres:
+    image: postgres:12
+    volumes:
+      - .:/app
+    env_file:
+      - ./.envs/.local/.postgres
+
+  rat_on: &rat_on
+    build:
+      context: .
+      dockerfile: ./compose/local/Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000 --settings=config.settings.local
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+  rabbitmq:
+    image: rabbitmq:3.8.8
+
+  flower:
+    <<: *rat_on
+    image: rat_on_flower
+    ports:
+      - "5555:5555"
+    command: celery flower --app=rat_on.taskapp --broker="amqp://rabbitmq:5672"
+
+  celeryworker:
+    <<: *rat_on
+    image: rat_on_celeryworker
+    depends_on:
+      - rabbitmq
+      - postgres
+    ports: []
+    command: celery -A rat_on.taskapp worker -l info
+
+  celerybeat:
+    <<: *rat_on
+    image: rat_on_celerybeat
+    depends_on:
+      - rabbitmq
+      - postgres
+    ports: []
+    command: celery -A rat_on.taskapp beat -l info

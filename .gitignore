@@ -1,0 +1,5 @@
+.envs
+.local_postgres_data
+config/settings/.env
+celerybeat-schedule
+celerybeat.pid
