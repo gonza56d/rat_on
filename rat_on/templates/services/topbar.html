@@ -1,0 +1,18 @@
+{% load pretty %}
+
+<header class="navbar navbar-expand navbar-dark bg-dark">
+    <a class="navbar-brand mr-0 mr-md-2" href="/" >
+      <title>Rat On</title>
+    </a>
+  
+    <div class="navbar-nav-scroll">
+      <ul class="navbar-nav bd-navbar-nav flex-row">
+        {% for cat in categories %}
+          <li class="nav-item mx-1">
+            <a class="btn {% if cat.lower == category.lower %}btn-success{% else %}btn-outline-success{% endif %}" href="{% url 'services:results_view' cat.lower %}">{{ cat|pretty }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  
+</header>

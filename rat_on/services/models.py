@@ -12,7 +12,7 @@ class Service(models.Model):
         EDUCATION = 'ED', 'Education'
         SOCIAL_MEDIA = 'SM', 'Social Media'
         GAMING = 'GA', 'Gaming'
-        CLOUD_SERVICE = 'CS', 'Cloud Service'
+        CLOUD_SERVICES = 'CS', 'Cloud Service'
 
     name = models.CharField(
         'name of the site to identify and compare with other results',

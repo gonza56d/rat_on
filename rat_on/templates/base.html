@@ -13,9 +13,12 @@
     <title>Rat On | {% block title %}Index{% endblock %}</title>
 </head>
 <body>
-    <h1>{% block body_title %}{% endblock %} Services Response Times</h1>
 
-    <div class="container">
+    {% block topbar %}{% endblock %}
+    
+    <h1 class="my-2 ml-4">{% block body_title %}{% endblock %} Sites Response Times</h1>
+
+    <div class="container my-2">
         <div class="row">
             <div class="col">
                 {% block container %}{% endblock %}

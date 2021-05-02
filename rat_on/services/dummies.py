@@ -70,17 +70,17 @@ class ServiceDummy:
         return [
             ServiceDummy(
                 name='amazon_web_services',
-                category=Service.Categories.CLOUD_SERVICE,
+                category=Service.Categories.CLOUD_SERVICES,
                 endpoint='https://aws.amazon.com/'
             ),
             ServiceDummy(
                 name='google_cloud',
-                category=Service.Categories.CLOUD_SERVICE,
+                category=Service.Categories.CLOUD_SERVICES,
                 endpoint='https://cloud.google.com/'
             ),
             ServiceDummy(
                 name='azure',
-                category=Service.Categories.CLOUD_SERVICE,
+                category=Service.Categories.CLOUD_SERVICES,
                 endpoint='https://azure.microsoft.com/en-us/'
             ),
         ]
