@@ -1,4 +1,5 @@
 {% load static %}
+{% load pretty %}
 
 <!doctype html>
 <html lang="en">
@@ -33,7 +34,7 @@
         {% for key, value in services_data.items %}
         {
             
-            label: '{{ key.title }}',
+            label: '{{ key|pretty }}',
             data: [
             {% for k, value in services_data.items %}
                 {% if key == k %}

@@ -1,1 +1,1 @@
-from .results import education
+from .results import results_view

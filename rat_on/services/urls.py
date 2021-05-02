@@ -5,9 +5,9 @@
 from django.urls import path
 
 # App
-from .views import education
+from .views import results_view
 
 
 urlpatterns = [
-    path('education/', education, name='education'),
+    path('<str:category>/', results_view, name='results_view'),
 ]
