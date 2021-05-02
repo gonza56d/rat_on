@@ -36,5 +36,5 @@ def results_view(request, category: Service.Categories.EDUCATION):
     return render(
         request,
         'services/results.html',
-        {'services_data': data}
+        {'services_data': data, 'category': category}
     )
