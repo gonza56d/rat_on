@@ -3,3 +3,4 @@
 config/settings/.env
 celerybeat-schedule
 celerybeat.pid
+__pycache__
