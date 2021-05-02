@@ -1,1 +1,1 @@
-from .results import general
+from .results import education

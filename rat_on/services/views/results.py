@@ -1,21 +1,34 @@
 """Services result views."""
 
+# Python
+from datetime import timedelta
+
 # Django
 from django.shortcuts import render
+from django.utils import timezone
 
 # App
 from rat_on.services.models import Service
 
 
-def general(request):
-    labels = []
-    data = []
-    services = Service.objects.all()
+def education(request):
+    last_hour = timezone.now() - timedelta(hours=4)
+    print('last_hour:', last_hour)
+    data = {
+        'platzi': [],
+        'udemy': [],
+        'coursera': [],
+    }
+    services = Service.objects.filter(
+        category=Service.Categories.EDUCATION,
+        request_datetime__gte=last_hour
+    )
     for service in services:
-        labels.append(service.name_pretty)
-        data.append(float(service.response_time))
+        data[service.name].append(
+            (service.request_datetime, float(service.response_time))
+        )
     return render(
         request,
         'services/results/general.html',
-        {'services_labels': labels, 'services_data': data}
+        {'services_data': data}
     )

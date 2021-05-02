@@ -14,16 +14,42 @@
 
     <script src="{% static 'js/chart.js' %}"></script>
     <script>
-        const labels = {{ services_labels|safe }};
+        const borderColors = [
+            'rgb(75, 192, 192)',
+            'rgb(192, 75, 192)',
+            'rgb(192, 192, 75)',
+        ];
         const data = {
-        labels: labels,
-        datasets: [{
-            label: 'My First Dataset',
-            data: {{ services_data|safe }},
+        labels: [
+        {% for key, value in services_data.items %}
+            {% if forloop.counter0 == 0 %}
+                {% for tuple in value %}
+                    new Date('{{ tuple.0|safe }}').toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", second: "2-digit", hour12: false}),
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        ],
+        datasets: [
+        {% for key, value in services_data.items %}
+        {
+            
+            label: '{{ key.title }}',
+            data: [
+            {% for k, value in services_data.items %}
+                {% if key == k %}
+                    {% for tuple in value %}
+                        {{ tuple.1|safe }},
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            ],
             fill: false,
-            borderColor: 'rgb(75, 192, 192)',
+            borderColor: borderColors[{{ forloop.counter0 }}],
             tension: 0.1
-        }]
+
+        },
+        {% endfor %}
+        ]
         };
         const config = {
             type: 'line',

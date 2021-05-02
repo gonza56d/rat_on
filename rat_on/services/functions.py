@@ -1,7 +1,6 @@
 """Service functions."""
 
 # Python
-from multiprocessing import Process
 import requests
 from requests.exceptions import Timeout
 
