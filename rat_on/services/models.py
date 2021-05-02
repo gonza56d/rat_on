@@ -37,3 +37,7 @@ class Service(models.Model):
     )
     response_status_code = models.PositiveIntegerField()
     response_result = models.CharField(max_length=1000)
+
+    @property
+    def name_pretty(self):
+        return str(self.name).replace('_', ' ').title()
