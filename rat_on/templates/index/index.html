@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load pretty %}
+
+
+{% block title %}Index{% endblock %}
+
+{% block body_title %}{{ category|pretty }}{% endblock %}
+
+{% block topbar %}{% include 'services/topbar.html' %}{% endblock %}
+
+{% block container %}
+
+   <h3>Select a category to see its results</h3>
+   <p>We track the response time of several service web pages.</p>
+
+{% endblock %}
