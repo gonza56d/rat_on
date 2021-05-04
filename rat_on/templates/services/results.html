@@ -12,57 +12,72 @@
 
 {% block container %}
 
-    <div style="width: 100%;">
-        <canvas id="myChart"></canvas>
-    </div>
+    <div class="col-12">
 
-    <script src="{% static 'js/chart.js' %}"></script>
-    <script>
-        const borderColors = [
-            'rgb(75, 192, 192)',
-            'rgb(192, 75, 192)',
-            'rgb(192, 192, 75)',
-        ];
-        const data = {
-        labels: [
-        {% for key, value in services_data.items %}
-            {% if forloop.counter0 == 0 %}
-                {% for tuple in value %}
-                    new Date('{{ tuple.0|safe }}').toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", second: "2-digit", hour12: false}),
-                {% endfor %}
-            {% endif %}
-        {% endfor %}
-        ],
-        datasets: [
-        {% for key, value in services_data.items %}
-        {
-            
-            label: '{{ key|pretty }}',
-            data: [
-            {% for k, value in services_data.items %}
-                {% if key == k %}
+        <div class="row">
+
+            <form method="GET" action="{% url 'services:results_view' category %}" enctype="application/x-www-form-urlencoded">
+                {{ form }}
+                <button>submit</button>
+            </form>
+
+        </div>
+
+        <div class="row">
+            <div style="width: 100%;">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
+        <script src="{% static 'js/chart.js' %}"></script>
+        <script>
+            const borderColors = [
+                'rgb(75, 192, 192)',
+                'rgb(192, 75, 192)',
+                'rgb(192, 192, 75)',
+            ];
+            const data = {
+            labels: [
+            {% for key, value in services_data.items %}
+                {% if forloop.counter0 == 0 %}
                     {% for tuple in value %}
-                        {{ tuple.1|safe }},
+                        new Date('{{ tuple.0|safe }}').toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", second: "2-digit", hour12: false}),
                     {% endfor %}
                 {% endif %}
             {% endfor %}
             ],
-            fill: false,
-            borderColor: borderColors[{{ forloop.counter0 }}],
-            tension: 0.1
+            datasets: [
+            {% for key, value in services_data.items %}
+            {
+                
+                label: '{{ key|pretty }}',
+                data: [
+                {% for k, value in services_data.items %}
+                    {% if key == k %}
+                        {% for tuple in value %}
+                            {{ tuple.1|safe }},
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                ],
+                fill: false,
+                borderColor: borderColors[{{ forloop.counter0 }}],
+                tension: 0.1
 
-        },
-        {% endfor %}
-        ]
-        };
-        const config = {
-            type: 'line',
-            data: data,
-        };
-        var myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
-    </script>
+            },
+            {% endfor %}
+            ]
+            };
+            const config = {
+                type: 'line',
+                data: data,
+            };
+            var myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+        </script>
+
+    </div>
 
 {% endblock %}
