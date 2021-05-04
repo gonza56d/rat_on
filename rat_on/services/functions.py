@@ -23,11 +23,13 @@ def hit_service(dummy=ServiceDummy) -> None:
     """
     request_datetime = timezone.now()
     response_result = 'Success'
+    status_code = 500
     try:
         request = requests.get(dummy.endpoint, timeout=60)
-        if request.status_code != 200:
+        status_code = request.status_code
+        if status_code != 200:
             raise ResponseException(
-                f'Expected status code 200 but got {request.status_code}'
+                f'Expected status code 200 but got {status_code}'
             )
     except Timeout:
         response_result = 'Request timeout'
@@ -42,6 +44,6 @@ def hit_service(dummy=ServiceDummy) -> None:
             endpoint=dummy.endpoint,
             request_datetime=request_datetime,
             response_time=response_time,
-            response_status_code=request.status_code,
+            response_status_code=status_code,
             response_result=response_result
         ).save()
