@@ -16,9 +16,8 @@
 
         <div class="row">
 
-            <form method="GET" action="{% url 'services:results_view' category %}" enctype="application/x-www-form-urlencoded">
+            <form id="ServicesResultsForm" method="GET" action="{% url 'services:results_view' category %}" enctype="application/x-www-form-urlencoded">
                 {{ form }}
-                <button>submit</button>
             </form>
 
         </div>
@@ -81,6 +80,7 @@
                 config
             );
         </script>
+        <script src="{% static 'js/onChangeInterval.js' %}"></script>
 
     </div>
 
