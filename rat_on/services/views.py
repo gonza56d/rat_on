@@ -17,16 +17,20 @@ def results_view(request, category: Service.Categories.EDUCATION):
 
     form = ServicesResultsForm(data=request.GET)
     data = {}
+    interval = 'LH'
 
     if form.is_valid():
         
+        interval = form.cleaned_data.get('interval')
+
         for dummy in eval(f'ServiceDummy.get_{category.lower()}()'):
             data[dummy.name] = []
 
         services = Service.objects.from_category_and_interval(
             category=eval(f'Service.Categories.{category.upper()}'),
-            interval=form.cleaned_data.get('interval')
+            interval=interval
         )
+        services = Service.objects.promediate()
 
         for service in services:
             data[service.name].append(
@@ -40,6 +44,7 @@ def results_view(request, category: Service.Categories.EDUCATION):
             'services_data': data,
             'category': category,
             'form': form,
-            'categories': Service.Categories.__members__
+            'categories': Service.Categories.__members__,
+            'selected_interval': interval
         }
     )
