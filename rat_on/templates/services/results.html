@@ -28,7 +28,7 @@
                 <canvas id="myChart"></canvas>
             </div>
         </div>
-
+        
         <script src="{% static 'js/chart.js' %}"></script>
         <script>
             const borderColors = [
@@ -41,7 +41,11 @@
             {% for key, value in services_data.items %}
                 {% if forloop.counter0 == 0 %}
                     {% for tuple in value %}
-                        new Date('{{ tuple.0|safe }}').toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", second: "2-digit", hour12: false}),
+                        {% if selected_interval == 'LH' or selected_interval == 'TD' %}
+                            new Date('{{ tuple.0|safe }}').toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", second: "2-digit", hour12: false}),
+                        {% else %}
+                            new Date('{{ tuple.0|safe }}').toLocaleDateString([], {year:"2-digit", month:"2-digit", day:"2-digit"}),
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
             {% endfor %}
